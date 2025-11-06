@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AI Model Builder</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <a class="brand" href="/">
+        <div class="logo"></div>
+        <div class="title">AI Model Builder</div>
+      </a>
+      <div class="header-actions">
+        <div class="search">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M21 21l-3.5-3.5M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input id="searchInput" type="text" placeholder="Search projects (⌘/Ctrl + K)"/>
+        </div>
+        <button id="openCreate" class="btn btn-primary">New Project</button>
+      </div>
+    </header>
+
+    <section class="chips" aria-label="Filters">
+      <span class="chip">All</span>
+      <span class="chip">Datasets</span>
+      <span class="chip">Models</span>
+      <span class="chip">Runs</span>
+    </section>
+
+    <main class="grid cols-3" id="projectsGrid" aria-live="polite">
+      <!-- Project cards rendered here -->
+    </main>
+
+    <footer class="footer">
+      Built for rapid experimentation. SQLite local store, simulated training, dataset uploads.
+    </footer>
+  </div>
+
+  <!-- Create Project Modal (simple inline dialog) -->
+  <dialog id="createDialog" style="border:none; padding:0; background:transparent;">
+    <div class="container" style="padding:20px; max-width:560px;">
+      <div class="card">
+        <div class="section-title" style="margin-bottom:10px">
+          <h2>Create Project</h2>
+          <button id="closeCreate" class="btn">Close</button>
+        </div>
+        <div class="stack">
+          <label>
+            <div class="muted" style="margin-bottom:6px;">Name</div>
+            <input id="projName" type="text" placeholder="e.g. Customer Churn Classifier"/>
+          </label>
+          <label>
+            <div class="muted" style="margin-bottom:6px;">Description</div>
+            <textarea id="projDesc" placeholder="Short description (optional)"></textarea>
+          </label>
+          <div style="display:flex; gap:10px; justify-content:flex-end">
+            <button id="createBtn" class="btn btn-success">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    // Minimal inline boot to avoid FOUC if /js/app.js isn't loaded yet.
+    // The full functionality is implemented in /js/app.js
+    (function(){
+      function k(e){return document.getElementById(e)}
+      const dlg = k('createDialog');
+      const openBtn = k('openCreate');
+      const closeBtn = k('closeCreate');
+      if(openBtn){ openBtn.onclick = () => dlg.showModal(); }
+      if(closeBtn){ closeBtn.onclick = () => dlg.close(); }
+    })();
+  </script>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>

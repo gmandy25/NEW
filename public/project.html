@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Project • AI Model Builder</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <a class="brand" href="/">
+        <div class="logo"></div>
+        <div class="title">AI Model Builder</div>
+      </a>
+      <div class="header-actions">
+        <a class="btn" href="/">All Projects</a>
+      </div>
+    </header>
+
+    <section class="card" style="margin-bottom:14px">
+      <div class="section-title">
+        <h1 id="projectTitle">Project</h1>
+        <div class="badge"><span class="dot completed"></span><span id="projectMeta">Loading…</span></div>
+      </div>
+      <p id="projectDesc" class="muted" style="margin:6px 0 0"></p>
+    </section>
+
+    <main class="grid cols-2">
+      <section class="card" aria-labelledby="datasetsTitle">
+        <h2 id="datasetsTitle">Datasets</h2>
+        <div class="stack">
+          <form id="uploadForm">
+            <div class="row">
+              <input id="datasetInput" type="file" name="file" accept=".csv,.tsv,.json,text/csv,application/json"/>
+              <button id="uploadBtn" class="btn btn-primary" type="submit">Upload</button>
+            </div>
+            <div id="previewWrap" class="stack" style="margin-top:10px; display:none">
+              <div class="muted">Preview (first rows):</div>
+              <div class="table" style="overflow:auto; max-height:220px">
+                <table id="datasetPreview" class="table" aria-label="Dataset preview">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+
+          <div>
+            <h3 style="margin-top:4px">Existing datasets</h3>
+            <div id="datasetsList" class="stack" style="max-height:220px; overflow:auto">
+              <div class="muted">Loading…</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="trainTitle">
+        <h2 id="trainTitle">Configure & Train</h2>
+        <div class="stack">
+          <div class="row">
+            <label>
+              <div class="muted" style="margin-bottom:6px">Architecture</div>
+              <select id="arch">
+                <option value="linear">Linear</option>
+                <option value="mlp" selected>MLP</option>
+                <option value="cnn">CNN</option>
+              </select>
+            </label>
+            <label>
+              <div class="muted" style="margin-bottom:6px">Epochs</div>
+              <input id="epochs" type="number" min="1" value="5"/>
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <div class="muted" style="margin-bottom:6px">Learning rate</div>
+              <input id="lr" type="number" step="0.0001" value="0.001"/>
+            </label>
+            <label>
+              <div class="muted" style="margin-bottom:6px">Batch size</div>
+              <input id="batch" type="number" min="1" value="32"/>
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <div class="muted" style="margin-bottom:6px">Train/Val split</div>
+              <input id="split" type="number" min="0.1" max="0.95" step="0.05" value="0.8"/>
+            </label>
+            <label>
+              <div class="muted" style="margin-bottom:6px">Seed</div>
+              <input id="seed" type="number" value="42"/>
+            </label>
+          </div>
+
+          <div class="row" style="align-items:center">
+            <label style="flex:0 0 auto; display:flex; align-items:center; gap:8px">
+              <input id="saveModel" type="checkbox"/>
+              <span class="muted">Save as model</span>
+            </label>
+            <input id="modelName" type="text" placeholder="Model name (optional)" disabled/>
+          </div>
+
+          <div style="display:flex; gap:10px; justify-content:flex-end">
+            <button id="trainBtn" class="btn btn-success" type="button">Start Training</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section class="card" aria-labelledby="modelsTitle" style="margin-top:14px">
+      <div class="section-title">
+        <h2 id="modelsTitle">Saved Models</h2>
+        <span class="muted">Configurations saved for this project</span>
+      </div>
+      <div id="modelsList" class="stack">
+        <div class="muted">Loading…</div>
+      </div>
+    </section>
+
+    <section class="grid cols-2" style="margin-top:14px">
+      <section class="card" aria-labelledby="jobsTitle">
+        <div class="section-title">
+          <h2 id="jobsTitle">Jobs</h2>
+          <span class="kbd">Auto-refresh</span>
+        </div>
+        <div id="jobsList" class="stack">
+          <div class="muted">Loading…</div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="metricsTitle">
+        <div class="section-title">
+          <h2 id="metricsTitle">Training Metrics</h2>
+          <span id="activeJobTitle" class="muted">No job selected</span>
+        </div>
+        <div class="stack">
+          <div class="canvas-wrap">
+            <canvas id="lossCanvas"></canvas>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="accCanvas"></canvas>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer">
+      Project workspace with datasets, configurations, and training runs.
+    </footer>
+  </div>
+
+  <script src="/js/project.js" defer></script>
+</body>
+</html>
